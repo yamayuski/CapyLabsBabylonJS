@@ -1,0 +1,50 @@
+{
+  "name": "babylon-capylabs-default-environment",
+  "version": "0.1.0",
+  "description": "CapyLabs default environment for Babylon.js",
+  "license": "Apache-2.0",
+  "homepage": "https://github.com/il-m-yamagishi/CapyLabsBabylonJS/",
+  "author": {
+    "email": "yamagishi.iloop@gmail.com",
+    "name": "Masaru Yamagishi",
+    "url": "https://github.com/il-m-yamagishi"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/il-m-yamagishi/CapyLabsBabylonJS.git"
+  },
+  "bugs": {
+    "url": "https://github.com/il-m-yamagishi/CapyLabsBabylonJS/issues"
+  },
+  "keywords": [
+    "babylon.js"
+  ],
+  "files": [
+    "dist/**/*"
+  ],
+  "typings": "dist/index.d.ts",
+  "main": "dist/index.js",
+  "scripts": {
+    "dev": "webpack serve -c webpack.dev.config.js",
+    "build": "webpack"
+  },
+  "devDependencies": {
+    "@babylonjs/core": "^5.0.0",
+    "@babylonjs/materials": "^5.0.0",
+    "@babylonjs/procedural-textures": "^5.0.0",
+    "html-webpack-plugin": "^5.5.0",
+    "ts-loader": "^9.3.0",
+    "webpack": "^5.72.1",
+    "webpack-cli": "^4.9.2",
+    "webpack-dev-server": "^4.9.0",
+    "webpack-merge": "^5.8.0"
+  },
+  "dependencies": {
+    "pepjs": "^0.5.3"
+  },
+  "peerDependencies": {
+    "@babylonjs/core": "^5.0.0",
+    "@babylonjs/materials": "^5.0.0",
+    "@babylonjs/procedural-textures": "^5.0.0"
+  }
+}

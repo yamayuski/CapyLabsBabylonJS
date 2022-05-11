@@ -1,0 +1,23 @@
+{
+  "name": "babylonjs-capylabs",
+  "version": "0.0.1",
+  "description": "CapyLabs with Babylon.js",
+  "author": "Masaru Yamagishi <akai_inu@live.jp>",
+  "license": "Apache-2.0",
+  "private": true,
+  "keywords": [
+    "BabylonJS",
+    "3DCG",
+    "Web"
+  ],
+  "workspaces": [
+    "packages/*"
+  ],
+  "devDependencies": {
+    "@types/node": "^16.0.0",
+    "@typescript-eslint/eslint-plugin": "^5.23.0",
+    "@typescript-eslint/parser": "^5.23.0",
+    "eslint": "^8.15.0",
+    "typescript": "^4.6.4"
+  }
+}
