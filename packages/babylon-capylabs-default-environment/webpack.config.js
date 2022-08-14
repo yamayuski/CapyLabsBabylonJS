@@ -4,6 +4,9 @@ const { merge } = require('webpack-merge');
 const baseConfig = {
     mode: 'production',
     entry: resolve(__dirname, 'src', 'index'),
+    output: {
+        path: resolve(__dirname, 'dist'),
+    },
     module: {
         rules: [
             {
@@ -28,8 +31,6 @@ module.exports = [
             library: 'babylon-capylabs-default-environment',
             libraryTarget: 'umd',
             filename: 'index.module.js',
-            path: resolve(__dirname, 'dist'),
-            clean: true,
         },
         externals: [
             /^@babylonjs\/.*$/,
@@ -44,8 +45,6 @@ module.exports = [
             libraryTarget: 'window',
             libraryExport: 'CapyLabsDefaultEnvironment',
             filename: 'index.js',
-            path: resolve(__dirname, 'dist'),
-            clean: true,
         },
         externals: [
             function ({request}, callback) {

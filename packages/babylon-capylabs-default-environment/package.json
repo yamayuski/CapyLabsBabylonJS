@@ -1,11 +1,11 @@
 {
   "name": "babylon-capylabs-default-environment",
   "version": "0.1.0",
-  "description": "CapyLabs default environment for Babylon.js",
+  "description": "CapyLabs better default environment for Babylon.js",
   "license": "Apache-2.0",
   "homepage": "https://github.com/il-m-yamagishi/CapyLabsBabylonJS/",
   "author": {
-    "email": "yamagishi.iloop@gmail.com",
+    "email": "akai_inu@live.jp",
     "name": "Masaru Yamagishi",
     "url": "https://github.com/il-m-yamagishi"
   },
