@@ -1,0 +1,46 @@
+{
+  "name": "babylon-capylabs-fps-camera",
+  "version": "0.0.1",
+  "description": "CapyLabs front-person shooter camera for Babylon.js",
+  "license": "Apache-2.0",
+  "homepage": "https://github.com/il-m-yamagishi/CapyLabsBabylonJS/",
+  "author": {
+    "email": "akai_inu@live.jp",
+    "name": "Masaru Yamagishi",
+    "url": "https://github.com/il-m-yamagishi"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/il-m-yamagishi/CapyLabsBabylonJS.git"
+  },
+  "bugs": {
+    "url": "https://github.com/il-m-yamagishi/CapyLabsBabylonJS/issues"
+  },
+  "keywords": [
+    "babylon.js"
+  ],
+  "files": [
+    "dist/**/*"
+  ],
+  "type": "module",
+  "typings": "./dist/babylon-capylabs-fps-camera.d.mts",
+  "main": "./dist/babylon-capylabs-fps-camera.umd.cjs",
+  "module": "./dist/babylon-capylabs-fps-camera.js",
+  "exports": {
+    ".": {
+      "import": "./dist/babylon-capylabs-fps-camera.js",
+      "require": "./dist/babylon-capylabs-fps-camera.umd.cjs",
+      "types": "./dist/babylon-capylabs-fps-camera.d.mts"
+    }
+  },
+  "scripts": {
+    "dev": "vite serve debug",
+    "build": "vite build && tsc -p tsconfig.build.json"
+  },
+  "devDependencies": {
+    "@babylonjs/core": "^5.0.0"
+  },
+  "peerDependencies": {
+    "@babylonjs/core": "^5.0.0"
+  }
+}
