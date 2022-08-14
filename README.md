@@ -1,3 +1,3 @@
 # CapyLabsBabylonJS
 
-CapyLabs for Babylon.js
+CapyLabs packages for Babylon.js
