@@ -23,5 +23,8 @@
   },
   "engines": {
     "node": "18.x"
+  },
+  "scripts": {
+    "build": "npm run -w packages/many-trees build && cp index.html dist/index.html"
   }
 }
