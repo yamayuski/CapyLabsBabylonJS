@@ -1,9 +1,9 @@
 {
   "compilerOptions": {
     "target": "ESNext",
-    "module": "Node16",
-    "moduleResolution": "Node16",
+    "module": "CommonJS",
     "isolatedModules": true,
+    "useDefineForClassFields": true,
     "esModuleInterop": true,
     "strict": true
   }

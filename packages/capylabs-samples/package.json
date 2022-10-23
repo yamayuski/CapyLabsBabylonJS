@@ -19,18 +19,11 @@
   "keywords": [
     "babylon.js"
   ],
-  "files": [
-    "dist/**/*"
-  ],
-  "type": "module",
   "scripts": {
-    "dev": "vite serve debug",
-    "build": "vite build && tsc -p tsconfig.build.json"
+    "dev": "vite dev",
+    "build": "vite build"
   },
-  "devDependencies": {
-    "@babylonjs/core": "^5.0.0"
-  },
-  "peerDependencies": {
+  "dependencies": {
     "@babylonjs/core": "^5.0.0"
   }
 }

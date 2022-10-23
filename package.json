@@ -1,5 +1,5 @@
 {
-  "name": "babylonjs-capylabs",
+  "name": "capylabs-babylonjs",
   "version": "0.0.1",
   "description": "CapyLabs with Babylon.js",
   "author": "Masaru Yamagishi <akai_inu@live.jp>",
@@ -14,7 +14,7 @@
     "packages/*"
   ],
   "devDependencies": {
-    "@types/node": "^16.0.0",
+    "@types/node": "^18.0.0",
     "@typescript-eslint/eslint-plugin": "^5.33.0",
     "@typescript-eslint/parser": "^5.33.0",
     "eslint": "^8.22.0",
@@ -25,6 +25,10 @@
     "node": "18.x"
   },
   "scripts": {
-    "build": "npm run -w packages/many-trees build && cp index.html dist/index.html"
+    "dev:samples": "npm run -w packages/capylabs-samples dev",
+    "build:samples": "npm run -w packages/capylabs-samples build && mkdir -p dist/samples && cp -r packages/capylabs-samples/dist/* dist/samples/ && cp index.html dist/index.html"
+  },
+  "dependencies": {
+    "@babylonjs/core": "^5.0.0"
   }
 }
