@@ -29,6 +29,8 @@
     "build:samples": "npm run -w packages/capylabs-samples build && mkdir -p dist/samples && cp -r packages/capylabs-samples/dist/* dist/samples/ && cp index.html dist/index.html"
   },
   "dependencies": {
-    "@babylonjs/core": "^5.0.0"
+    "@babylonjs/core": "^5.0.0",
+    "@babylonjs/loaders": "^5.0.0",
+    "@babylonjs/materials": "^5.0.0"
   }
 }

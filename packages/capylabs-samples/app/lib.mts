@@ -9,16 +9,19 @@ import {
     Scene,
 } from "@babylonjs/core";
 
-export default function main(createScene: (engine: Engine) => Scene): void {
+export default async function main(createScene: (engine: Engine) => Promise<Scene>): Promise<void> {
     const $canvas = document.getElementById("app") as HTMLCanvasElement | null;
     if (!$canvas) {
         throw new Error('canvas#app not found');
     }
     const engine = new Engine($canvas);
-    const scene = createScene(engine);
+    engine.displayLoadingUI();
+    const scene = await createScene(engine);
 
     engine.runRenderLoop(() => {
         scene.render();
     });
     window.addEventListener("resize", () => engine.resize());
+
+    engine.hideLoadingUI();
 }

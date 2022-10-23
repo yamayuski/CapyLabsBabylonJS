@@ -24,6 +24,8 @@
     "build": "vite build"
   },
   "dependencies": {
-    "@babylonjs/core": "^5.0.0"
+    "@babylonjs/core": "^5.0.0",
+    "@babylonjs/loaders": "^5.0.0",
+    "@babylonjs/materials": "^5.0.0"
   }
 }
