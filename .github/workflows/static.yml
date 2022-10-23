@@ -38,7 +38,7 @@ jobs:
       - name: build
         run: |
           npm install
-          npm run build
+          npm run build:samples
       - name: Setup Pages
         uses: actions/configure-pages@v2
       - name: Upload artifact
