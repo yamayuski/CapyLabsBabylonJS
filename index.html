@@ -28,11 +28,25 @@
       header, footer {
         text-align: center;
       }
+      #breadcrumb {
+        display: flex;
+        list-style: none;
+        justify-content: center;
+      }
+      #breadcrumb li:not(:last-child)::after {
+        display: inline-block;
+        content: "/";
+        margin: 0 0.5rem;
+      }
     </style>
   </head>
   <body>
     <header>
       <h1>CapyLabs Babylon.js</h1>
+      <ol id="breadcrumb">
+        <li><a href="/">Cafe capy</a></li>
+        <li><a href="/CapyLabsBabylonJS">CapyLabs BabylonJS</a></li>
+      </ol>
     </header>
 
     <main>

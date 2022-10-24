@@ -38,3 +38,14 @@ canvas#app {
   height: 500px;
   border-radius: 8px;
 }
+
+#breadcrumb {
+  display: flex;
+  list-style: none;
+  justify-content: center;
+}
+#breadcrumb li:not(:last-child)::after {
+  display: inline-block;
+  content: "/";
+  margin: 0 0.5rem;
+}

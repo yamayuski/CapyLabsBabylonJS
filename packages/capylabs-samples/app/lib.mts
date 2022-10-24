@@ -15,13 +15,10 @@ export default async function main(createScene: (engine: Engine) => Promise<Scen
         throw new Error('canvas#app not found');
     }
     const engine = new Engine($canvas);
-    engine.displayLoadingUI();
     const scene = await createScene(engine);
 
     engine.runRenderLoop(() => {
         scene.render();
     });
     window.addEventListener("resize", () => engine.resize());
-
-    engine.hideLoadingUI();
 }
