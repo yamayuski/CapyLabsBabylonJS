@@ -10,6 +10,7 @@ export default defineConfig({
         rollupOptions: {
             input: {
                 "many-trees": resolve(__dirname, "app", "many-trees", "index.html"),
+                "tic-tac-toe": resolve(__dirname, "app", "tic-tac-toe", "index.html"),
             },
         },
     },
