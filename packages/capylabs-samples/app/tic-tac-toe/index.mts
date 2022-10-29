@@ -19,12 +19,10 @@ import {
     Vector3,
 } from "@babylonjs/core";
 
-import "@babylonjs/loaders/glTF"
 import "../lib.css";
 import main from "../lib.mjs";
 
 async function createScene(engine: Engine): Promise<Scene> {
-
     let gameState = GameState.INIT;
     let turn = 0;
     const data = [
