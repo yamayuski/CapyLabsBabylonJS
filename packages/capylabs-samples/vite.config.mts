@@ -11,6 +11,7 @@ export default defineConfig({
             input: {
                 "many-trees": resolve(__dirname, "app", "many-trees", "index.html"),
                 "tic-tac-toe": resolve(__dirname, "app", "tic-tac-toe", "index.html"),
+                "pong": resolve(__dirname, "app", "pong", "index.html"),
             },
         },
     },
