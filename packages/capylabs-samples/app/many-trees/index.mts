@@ -21,9 +21,8 @@ import {
     Vector3,
 } from "@babylonjs/core";
 import { SkyMaterial } from "@babylonjs/materials";
+import "@babylonjs/loaders/glTF";
 
-import "@babylonjs/loaders/glTF"
-import "../lib.css";
 import main from "../lib.mjs";
 
 async function createScene(engine: Engine): Promise<Scene> {

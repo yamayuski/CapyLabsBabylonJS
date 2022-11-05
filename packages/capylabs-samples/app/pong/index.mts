@@ -13,7 +13,6 @@ import {
     Vector3,
 } from "@babylonjs/core";
 
-import "../lib.css";
 import main from "../lib.mjs";
 
 async function createScene(engine: Engine): Promise<Scene> {
