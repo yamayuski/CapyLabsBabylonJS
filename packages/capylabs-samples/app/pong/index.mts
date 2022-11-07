@@ -18,8 +18,8 @@ import main from "../lib.mjs";
 async function createScene(engine: Engine): Promise<Scene> {
     const scene = new Scene(engine);
     scene.clearColor = new Color4(1, 1, 1, 1);
-    new ArcRotateCamera('mainCamera', 0, 0, 6, Vector3.Zero(), scene);
-    new DirectionalLight('mainLight', new Vector3(0.1, -1, 0.1), scene);
+    new ArcRotateCamera("mainCamera", 0, 0, 6, Vector3.Zero(), scene);
+    new DirectionalLight("mainLight", new Vector3(0.1, -1, 0.1), scene);
 
     return scene;
 }

@@ -21,7 +21,9 @@
   ],
   "scripts": {
     "dev": "vite dev",
-    "build": "vite build"
+    "build": "vite build",
+    "lint": "eslint app",
+    "lint:fix": "eslint --fix app"
   },
   "dependencies": {
     "@babylonjs/core": "^5.0.0",

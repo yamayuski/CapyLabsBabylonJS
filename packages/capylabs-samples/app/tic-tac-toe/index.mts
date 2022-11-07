@@ -32,8 +32,8 @@ async function createScene(engine: Engine): Promise<Scene> {
 
     const scene = new Scene(engine);
     scene.clearColor = new Color4(1, 1, 1, 1);
-    new ArcRotateCamera('mainCamera', 0, 0, 6, Vector3.Zero(), scene);
-    new DirectionalLight('mainLight', new Vector3(0.1, -1, 0.1), scene);
+    new ArcRotateCamera("mainCamera", 0, 0, 6, Vector3.Zero(), scene);
+    new DirectionalLight("mainLight", new Vector3(0.1, -1, 0.1), scene);
 
     createTableLine(scene);
     createBackground(scene);
@@ -58,7 +58,7 @@ async function createScene(engine: Engine): Promise<Scene> {
                 const actionManager = new ActionManager(scene);
                 actionManager.registerAction(new ExecuteCodeAction(
                     ActionManager.OnPickTrigger,
-                    (evt) => {
+                    () => {
                         if (data[x][y] !== 0 || gameState === GameState.OVER) {
                             return;
                         }
@@ -70,7 +70,7 @@ async function createScene(engine: Engine): Promise<Scene> {
                         }
                         if (wasOver() === -1) {
                             setTimeout(() => {
-                                alert('DRAW');
+                                alert("DRAW");
                                 gameState = GameState.OVER;
                             }, 10);
                             return;
@@ -140,38 +140,38 @@ function createBackground(scene: Scene): void {
 }
 
 function createTableLine(scene: Scene): void {
-    const lineMat = new StandardMaterial('mat', scene);
+    const lineMat = new StandardMaterial("mat", scene);
     lineMat.diffuseColor = Color3.Black();
-    const line1 = MeshBuilder.CreateBox('line1', { width: 10, height: 0.5, size: 0.1 }, scene);
+    const line1 = MeshBuilder.CreateBox("line1", { width: 10, height: 0.5, size: 0.1 }, scene);
     line1.material = lineMat;
     line1.position = new Vector3(1, 0, 1);
-    const line2 = line1.clone('line2');
+    const line2 = line1.clone("line2");
     line2.position = new Vector3(1, 0, -1);
-    const line3 = line2.clone('line3');
+    const line3 = line2.clone("line3");
     line3.rotationQuaternion = Quaternion.RotationYawPitchRoll(Math.PI / 2, 0, 0);
-    const line4 = line3.clone('line4');
+    const line4 = line3.clone("line4");
     line4.position = new Vector3(-1, 0, 1);
 }
 
 function createCircle(position: Vector3, scene: Scene): void {
-    const mat = new StandardMaterial('mat', scene);
+    const mat = new StandardMaterial("mat", scene);
     mat.diffuseColor = Color3.Red();
     mat.specularPower = 30.0;
-    const circle = MeshBuilder.CreateTorus('disk1', { thickness: 0.2, tessellation: 32 }, scene);
+    const circle = MeshBuilder.CreateTorus("disk1", { thickness: 0.2, tessellation: 32 }, scene);
     circle.material = mat;
     circle.position = new Vector3(position.x, 0.1, position.z);
 }
 
 function createCross(position: Vector3, scene: Scene): void {
-    const mat = new StandardMaterial('mat', scene);
+    const mat = new StandardMaterial("mat", scene);
     mat.diffuseColor = Color3.Blue();
     mat.specularPower = 30.0;
-    const cross = MeshBuilder.CreateCapsule('cross1', { tessellation: 32 }, scene);
+    const cross = MeshBuilder.CreateCapsule("cross1", { tessellation: 32 }, scene);
     cross.scaling = new Vector3(0.5, 1, 0.5);
     cross.rotationQuaternion = Quaternion.RotationYawPitchRoll(Math.PI / 4, Math.PI / 2, 0);
     cross.material = mat;
     cross.position = new Vector3(position.x, 0.1, position.z);
-    const cross2 = MeshBuilder.CreateCapsule('cross2', { tessellation: 32 }, scene);
+    const cross2 = MeshBuilder.CreateCapsule("cross2", { tessellation: 32 }, scene);
     cross2.scaling = new Vector3(0.5, 1, 0.5);
     cross2.rotationQuaternion = Quaternion.RotationYawPitchRoll(-Math.PI / 4, Math.PI / 2, 0);
     cross2.material = mat;

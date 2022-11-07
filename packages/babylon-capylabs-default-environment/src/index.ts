@@ -4,4 +4,4 @@
  * @license Apache-2.0
  */
 
-export * from './CapyLabsDefaultEnvironment';
+export * from "./CapyLabsDefaultEnvironment";

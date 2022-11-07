@@ -60,7 +60,7 @@ async function createScene(engine: Engine, canvas: HTMLCanvasElement): Promise<S
     // Add shadow & SSAO
     // @link https://doc.babylonjs.com/divingDeeper/lights/shadows
     const shadowGenerator = new CascadedShadowGenerator(1024, light);
-    new SSAORenderingPipeline('SSAO', scene, 1.0, [camera]);
+    new SSAORenderingPipeline("SSAO", scene, 1.0, [camera]);
 
     // loading assets
     engine.displayLoadingUI();
@@ -72,6 +72,7 @@ async function createScene(engine: Engine, canvas: HTMLCanvasElement): Promise<S
     const explodeSound = await loadExplodeSound(scene);
     const shootParticle = await loadShootParticle(scene);
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const switchScene = (sceneName: SceneState, context?: any): any => {
         switch (sceneName) {
             case SceneState.TITLE:
@@ -103,9 +104,9 @@ async function createScene(engine: Engine, canvas: HTMLCanvasElement): Promise<S
 }
 
 enum SceneState {
-    TITLE = 'TITLE',
-    IN_GAME = 'IN_GAME',
-    GAMEOVER = 'GAMEOVER',
+    TITLE = "TITLE",
+    IN_GAME = "IN_GAME",
+    GAMEOVER = "GAMEOVER",
 }
 
 /**
@@ -116,6 +117,7 @@ type Disposable = () => void;
 /**
  * trigger to switch to next scene
  */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 type SwitchSceneState = (sceneName: SceneState, context?: any) => void;
 
 class TitleScene {
@@ -133,20 +135,20 @@ class TitleScene {
         text1.shadowBlur = 3;
         text1.shadowOffsetX = 1;
         text1.shadowOffsetY = 1;
-        text1.shadowColor = '#111';
-        text1.fontFamily = 'Impact, fantasy';
+        text1.shadowColor = "#111";
+        text1.fontFamily = "Impact, fantasy";
         advancedTexture.addControl(text1);
 
         const text2 = new TextBlock();
         text2.top = 100;
-        text2.text = 'Click to start';
-        text2.color = '#ffffff';
+        text2.text = "Click to start";
+        text2.color = "#ffffff";
         text2.fontSize = 30;
         text2.shadowBlur = 3;
         text2.shadowOffsetX = 1;
         text2.shadowOffsetY = 1;
-        text2.shadowColor = '#000000';
-        text2.fontFamily = 'Impact, fantasy';
+        text2.shadowColor = "#000000";
+        text2.fontFamily = "Impact, fantasy";
         advancedTexture.addControl(text2);
 
         setTimeout(() => {
@@ -214,16 +216,16 @@ class InGameScene {
         const advancedTexture = AdvancedDynamicTexture.CreateFullscreenUI("InGameUI", true, this.scene);
         const text1 = new TextBlock();
         text1.verticalAlignment = Control.VERTICAL_ALIGNMENT_TOP;
-        text1.top = '10px';
-        text1.height = '60px';
+        text1.top = "10px";
+        text1.height = "60px";
         text1.text = "Score: 0";
         text1.color = "#ffffff";
         text1.fontSize = 60;
         text1.shadowBlur = 3;
         text1.shadowOffsetX = 1;
         text1.shadowOffsetY = 1;
-        text1.shadowColor = '#111';
-        text1.fontFamily = 'Impact, fantasy';
+        text1.shadowColor = "#111";
+        text1.fontFamily = "Impact, fantasy";
         advancedTexture.addControl(text1);
         this.scoreText = text1;
 
@@ -235,7 +237,9 @@ class InGameScene {
 
     private addScore(count: number): void {
         this.score += Math.round(count);
-        this.scoreText!.text = `Score: ${this.score}`;
+        if (this.scoreText) {
+            this.scoreText.text = `Score: ${this.score}`;
+        }
     }
 
     private spawnEnemy(): Disposable {
@@ -259,7 +263,7 @@ class InGameScene {
             const p = this.scene.pick(
                 this.scene.pointerX,
                 this.scene.pointerY,
-                (mesh) => mesh.name === 'ground',
+                (mesh) => mesh.name === "ground",
                 true,
                 this.opts.camera,
             );
@@ -329,7 +333,7 @@ class InGameScene {
         };
 
         const onCollide = (at: AbstractMesh) => {
-            if (at.name.startsWith('enemy-')) {
+            if (at.name.startsWith("enemy-")) {
                 dispose();
                 at.dispose();
             }
@@ -349,7 +353,7 @@ class InGameScene {
 
     private instanciateEnemy(): Disposable {
         const HEIGHT = 1.2;
-        const entries = this.opts.enemyAssets.instantiateModelsToScene((name) => `enemy-${Date.now()}`, true);
+        const entries = this.opts.enemyAssets.instantiateModelsToScene(() => `enemy-${Date.now()}`, true);
         const mesh = entries.rootNodes[0] as Mesh;
         mesh.position = new Vector3(0, 1000, 0);
         mesh.rotate(Vector3.Up(), Math.random() * Math.PI * 2);
@@ -374,8 +378,8 @@ class InGameScene {
         }
 
         const onCollide = (at: AbstractMesh): void => {
-            if (at.name.startsWith('bullet-')) {
-                console.log('hit with bullet');
+            if (at.name.startsWith("bullet-")) {
+                console.log("hit with bullet");
                 dispose();
                 at.dispose();
                 this.opts.explodeSound.setPlaybackRate((Math.random() * 0.3) + 0.85);
@@ -390,7 +394,7 @@ class InGameScene {
             mesh.moveWithCollisions(mesh.forward.normalize().multiplyByFloats(speed, speed, speed));
             if (shouldDisappear(mesh.position)) {
                 // hit to player
-                console.log('hit to player!');
+                console.log("hit to player!");
                 dispose();
                 this.disposables.forEach((d) => d());
                 this.disposables = [];
@@ -420,8 +424,8 @@ class GameoverScene {
         text1.shadowBlur = 3;
         text1.shadowOffsetX = 1;
         text1.shadowOffsetY = 1;
-        text1.shadowColor = 'white';
-        text1.fontFamily = 'Impact, fantasy';
+        text1.shadowColor = "white";
+        text1.fontFamily = "Impact, fantasy";
         advancedTexture.addControl(text1);
 
         const textScore = new TextBlock();
@@ -432,20 +436,20 @@ class GameoverScene {
         textScore.shadowBlur = 3;
         textScore.shadowOffsetX = 1;
         textScore.shadowOffsetY = 1;
-        textScore.shadowColor = 'white';
-        textScore.fontFamily = 'Impact, fantasy';
+        textScore.shadowColor = "white";
+        textScore.fontFamily = "Impact, fantasy";
         advancedTexture.addControl(textScore);
 
         const text2 = new TextBlock();
         text2.top = 100;
-        text2.text = 'Right Click to restart';
-        text2.color = '#ffffff';
+        text2.text = "Right Click to restart";
+        text2.color = "#ffffff";
         text2.fontSize = 30;
         text2.shadowBlur = 3;
         text2.shadowOffsetX = 1;
         text2.shadowOffsetY = 1;
-        text2.shadowColor = '#000000';
-        text2.fontFamily = 'Impact, fantasy';
+        text2.shadowColor = "#000000";
+        text2.fontFamily = "Impact, fantasy";
         advancedTexture.addControl(text2);
 
         const btn = Button.CreateSimpleButton(`tweet`, `ツイートする`);
@@ -454,15 +458,15 @@ class GameoverScene {
             const url = [
                 `https://twitter.com/intent/tweet?`,
                 `text=${encodeURIComponent(`CapyLabs01 でスコア ${opts.score} 獲得！`)}`,
-                `&url=${encodeURIComponent('https://playground.babylonjs.com/#ZHRWSL#49')}`,
+                `&url=${encodeURIComponent("https://playground.babylonjs.com/#ZHRWSL#49")}`,
                 `&hashtags=CapyLabs01`,
-            ].join('');
-            window.open(url, '_blank');
+            ].join("");
+            window.open(url, "_blank");
         });
-        btn.background = '#1C9BF2';
-        btn.color = '#FDFFFC';
+        btn.background = "#1C9BF2";
+        btn.color = "#FDFFFC";
         btn.width = 0.2;
-        btn.height = '40px';
+        btn.height = "40px";
         advancedTexture.addControl(btn);
 
         setTimeout(() => {
@@ -482,7 +486,7 @@ class GameoverScene {
 async function loadShootParticle(scene: Scene): Promise<Mesh> {
     return new Promise((resolve) => {
         const name = Date.now();
-        const particleTex = new Texture('https://assets.babylonjs.com/textures/sparkStretched.png', scene);
+        const particleTex = new Texture("https://assets.babylonjs.com/textures/sparkStretched.png", scene);
         particleTex.hasAlpha = true;
         const particleMat = new StandardMaterial(`particle-${name}`, scene);
         particleMat.diffuseTexture = particleTex;
@@ -512,8 +516,8 @@ function showShootParticle(baseMesh: Mesh, pos: Vector3, time: number): void {
 async function loadShootSound(scene: Scene): Promise<Sound> {
     return new Promise((resolve) => {
         const sound: Sound = new Sound(
-            'gunshot',
-            'https://playground.babylonjs.com/sounds/gunshot.wav',
+            "gunshot",
+            "https://playground.babylonjs.com/sounds/gunshot.wav",
             scene,
             () => resolve(sound),
             { loop: false, autoplay: false },
@@ -524,8 +528,8 @@ async function loadShootSound(scene: Scene): Promise<Sound> {
 async function loadExplodeSound(scene: Scene): Promise<Sound> {
     return new Promise((resolve) => {
         const sound: Sound = new Sound(
-            'gunshot',
-            'https://assets.babylonjs.com/sound/cannonBlast.mp3',
+            "gunshot",
+            "https://assets.babylonjs.com/sound/cannonBlast.mp3",
             scene,
             () => resolve(sound),
             { loop: false, autoplay: false },
@@ -541,13 +545,13 @@ function createPlayer(scene: Scene, shadowGenerator: ShadowGenerator): Promise<M
             him.scaling = new Vector3(0.03, 0.03, 0.03);
 
             // Right hand IK Controller
-            const targetMeshR = MeshBuilder.CreateSphere('targetMeshR', {}, scene);
+            const targetMeshR = MeshBuilder.CreateSphere("targetMeshR", {}, scene);
             targetMeshR.isVisible = false;
             targetMeshR.parent = him;
             targetMeshR.position.x = 3;
             targetMeshR.position.y = 60;
             targetMeshR.position.z = 12;
-            const poleTargetMeshR = MeshBuilder.CreateSphere('poleTargetMeshR', {}, scene);
+            const poleTargetMeshR = MeshBuilder.CreateSphere("poleTargetMeshR", {}, scene);
             poleTargetMeshR.isVisible = false;
             poleTargetMeshR.parent = him;
             poleTargetMeshR.position.x = -100;
@@ -555,13 +559,13 @@ function createPlayer(scene: Scene, shadowGenerator: ShadowGenerator): Promise<M
             const rightIKControl = new BoneIKController(him, assets.skeletons[0].bones[14], {targetMesh: targetMeshR, poleTargetMesh: poleTargetMeshR, poleAngle: Math.PI});
 
             // Left hand IK Controller
-            const targetMeshL = MeshBuilder.CreateSphere('targetMeshL', {}, scene);
+            const targetMeshL = MeshBuilder.CreateSphere("targetMeshL", {}, scene);
             targetMeshL.isVisible = false;
             targetMeshL.parent = him;
             targetMeshL.position.x = -4;
             targetMeshL.position.y = 60;
             targetMeshL.position.z = 20;
-            const poleTargetMeshL = MeshBuilder.CreateSphere('poleTargetMeshL', {}, scene);
+            const poleTargetMeshL = MeshBuilder.CreateSphere("poleTargetMeshL", {}, scene);
             poleTargetMeshL.isVisible = false;
             poleTargetMeshL.parent = him;
             poleTargetMeshL.position.x = 0;
@@ -569,11 +573,11 @@ function createPlayer(scene: Scene, shadowGenerator: ShadowGenerator): Promise<M
             const leftIKControl = new BoneIKController(him, assets.skeletons[0].bones[33], {targetMesh: targetMeshL, poleTargetMesh: poleTargetMeshL, poleAngle: Math.PI});
             assets.skeletons[0].bones[16].rotation = new Vector3()
 
-            const gun = MeshBuilder.CreateBox('gun', { width: 4, height: 3, size: 20 }, scene);
+            const gun = MeshBuilder.CreateBox("gun", { width: 4, height: 3, size: 20 }, scene);
             gun.parent = him;
             gun.position.y = 65;
             gun.position.z = 20;
-            const gunHolder = MeshBuilder.CreateBox('gunHolder', { width: 3, height: 2, size: 6 }, scene);
+            const gunHolder = MeshBuilder.CreateBox("gunHolder", { width: 3, height: 2, size: 6 }, scene);
             gunHolder.parent = him;
             gunHolder.position.y = 62;
             gunHolder.position.z = 13;
@@ -616,7 +620,7 @@ function createGround(scene: Scene): void {
     const textureBump = new Texture("https://assets.babylonjs.com/textures/ParallaxNormal.png", scene);
     textureBump.uScale = scale;
     textureBump.vScale = scale;
-    const material = new StandardMaterial('mat1', scene);
+    const material = new StandardMaterial("mat1", scene);
     material.diffuseTexture = texture;
     material.bumpTexture = textureBump;
     material.useParallax = true;

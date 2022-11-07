@@ -1,4 +1,4 @@
-const $style = document.createElement('style');
+const $style = document.createElement("style");
 $style.innerHTML = `
 html,
 body {
@@ -18,35 +18,38 @@ canvas {
 document.head.appendChild($style);
 
 async function loadScript(url) {
-    const $script = document.createElement('script');
+    const $script = document.createElement("script");
     $script.src = url;
     document.body.appendChild($script);
-    return new Promise((resolve) => $script.addEventListener('load', resolve));
+    return new Promise((resolve) => $script.addEventListener("load", resolve));
 }
 
-window.addEventListener('load', async () => {
-    await loadScript('https://code.jquery.com/pep/0.4.3/pep.js');
-    await loadScript('https://cdn.babylonjs.com/babylon.js');
-    await loadScript('https://cdn.babylonjs.com/materialsLibrary/babylonjs.materials.min.js');
-    await loadScript('https://cdn.babylonjs.com/proceduralTexturesLibrary/babylonjs.proceduralTextures.min.js');
+window.addEventListener("load", async () => {
+    await loadScript("https://code.jquery.com/pep/0.4.3/pep.js");
+    await loadScript("https://cdn.babylonjs.com/babylon.js");
+    await loadScript("https://cdn.babylonjs.com/materialsLibrary/babylonjs.materials.min.js");
+    await loadScript("https://cdn.babylonjs.com/proceduralTexturesLibrary/babylonjs.proceduralTextures.min.js");
 
-    const $canvas = document.createElement('canvas');
-    $canvas.setAttribute('touch-action', 'none');
+    const $canvas = document.createElement("canvas");
+    $canvas.setAttribute("touch-action", "none");
     document.body.appendChild($canvas);
 
     const createScene = (engine, canvas) => {
+        // eslint-disable-next-line no-undef
         const scene = new BABYLON.Scene(engine);
+        // eslint-disable-next-line no-undef
         const env = new BabylonCapyLabs.CapyLabsDefaultEnvironment(scene);
         env.camera.attachControl(canvas, true);
         return scene;
     };
+    // eslint-disable-next-line no-undef
     const engine = new BABYLON.Engine($canvas);
     const scene = createScene(engine, $canvas);
-    console.log('scene has created');
+    console.log("scene has created");
     engine.runRenderLoop(() => {
         scene.render();
     });
-    window.addEventListener('resize', () => {
+    window.addEventListener("resize", () => {
         engine.resize();
     });
 });

@@ -5,6 +5,7 @@
     "isolatedModules": true,
     "useDefineForClassFields": true,
     "esModuleInterop": true,
-    "strict": true
+    "strict": true,
+    "lib": ["DOM"]
   }
 }

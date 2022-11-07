@@ -19,7 +19,7 @@ async function main(): Promise<void> {
     camera.setTarget(Vector3.Zero());
     camera.attachControl(true);
 
-    const ground = MeshBuilder.CreateGround("Ground", { width: 10, height: 10 }, scene);
+    MeshBuilder.CreateGround("Ground", { width: 10, height: 10 }, scene);
 
     engine.runRenderLoop(() => {
         scene.render();

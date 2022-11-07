@@ -4,10 +4,10 @@
  * @license Apache-2.0
  */
 
-import * as BABYLON from '@babylonjs/core/Legacy/legacy';
-import { SkyMaterial } from '@babylonjs/materials/sky/skyMaterial';
-import { GridMaterial } from '@babylonjs/materials/grid/gridMaterial';
-import { CloudProceduralTexture } from '@babylonjs/procedural-textures/cloud/cloudProceduralTexture';
+import * as BABYLON from "@babylonjs/core/Legacy/legacy";
+import { SkyMaterial } from "@babylonjs/materials/sky/skyMaterial";
+import { GridMaterial } from "@babylonjs/materials/grid/gridMaterial";
+import { CloudProceduralTexture } from "@babylonjs/procedural-textures/cloud/cloudProceduralTexture";
 
 /**
  * Adds DirectionalLight
@@ -36,7 +36,7 @@ type SkyOpts = {
  * Adds grid ground
  */
 type GroundOpts = {
-    textureType?: 'grid',
+    textureType?: "grid",
     size?: number,
 }
 /**
@@ -256,10 +256,10 @@ export class ShooterCameraDashInput implements BABYLON.ICameraInput<BABYLON.Free
         public usePointerLock = false,
     ) {
         // Use WASD to move
-        camera.keysUp.push('W'.charCodeAt(0));
-        camera.keysDown.push('S'.charCodeAt(0));
-        camera.keysLeft.push('A'.charCodeAt(0));
-        camera.keysRight.push('D'.charCodeAt(0));
+        camera.keysUp.push("W".charCodeAt(0));
+        camera.keysDown.push("S".charCodeAt(0));
+        camera.keysLeft.push("A".charCodeAt(0));
+        camera.keysRight.push("D".charCodeAt(0));
     }
 
     /**
@@ -272,12 +272,12 @@ export class ShooterCameraDashInput implements BABYLON.ICameraInput<BABYLON.Free
         this.camera.getScene().gravity = new BABYLON.Vector3(0, -0.1, 0);
 
         this.onKeyboardObservable = this.camera.getScene().onKeyboardObservable.add((info) => {
-            if (info.type === 1 && info.event.code === 'ShiftLeft') {
+            if (info.type === 1 && info.event.code === "ShiftLeft") {
                 this.camera.speed = this.dashSpeed;
             } else {
                 this.camera.speed = this.walkSpeed;
             }
-            if (info.type === 1 && info.event.code === 'Space') {
+            if (info.type === 1 && info.event.code === "Space") {
                 if (this.camera.position.y <= 2.5) {
                     this.camera.cameraDirection.y += 0.5;
                 }
@@ -313,13 +313,13 @@ export class ShooterCameraDashInput implements BABYLON.ICameraInput<BABYLON.Free
      * {@inheritdoc}
      */
     public getClassName(): string {
-        return 'ShooterCameraDashInput';
+        return "ShooterCameraDashInput";
     }
 
     /**
      * {@inheritdoc}
      */
     public getSimpleName(): string {
-        return 'dash';
+        return "dash";
     }
 }
