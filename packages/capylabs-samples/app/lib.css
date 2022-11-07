@@ -15,6 +15,7 @@ a:hover {
 header, main, footer {
   width: 100vw;
   max-width: 800px;
+  box-sizing: border-box;
   background-color: #FFFFFF;
   margin: 1.5rem auto;
   padding: 1rem;
