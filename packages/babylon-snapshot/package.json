@@ -22,8 +22,9 @@
   "scripts": {
     "dev": "vite serve debug",
     "build": "vite build && tsc -p tsconfig.build.json",
-    "lint": "eslint src debug",
-    "lint:fix": "eslint --fix src debug"
+    "lint": "eslint src tests",
+    "lint:fix": "eslint --fix src tests",
+    "test": "vitest"
   },
   "devDependencies": {
     "@babylonjs/core": "^5.0.0"

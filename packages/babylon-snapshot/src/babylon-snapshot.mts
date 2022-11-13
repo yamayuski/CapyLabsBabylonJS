@@ -3,3 +3,5 @@
  * @copyright 2022 Masaru Yamagishi
  * @license Apache-2.0
  */
+
+export * from "./interpolate.mjs";
