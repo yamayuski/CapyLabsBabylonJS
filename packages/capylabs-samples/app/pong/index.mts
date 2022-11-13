@@ -11,7 +11,6 @@ import {
     DirectionalLight,
     Engine,
     MeshBuilder,
-    Ray,
     Scene,
     StandardMaterial,
     Vector3,
