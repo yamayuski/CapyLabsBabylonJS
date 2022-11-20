@@ -8,7 +8,7 @@
  * linear interpolation
  * @param previous point 1
  * @param current  point 2
- * @param amount   amount(0 to 1)
+ * @param amount   amount(should be from 0 to 1)
  * @returns interpolated value
  */
 export function lerp(previous: number, current: number, amount: number): number {
@@ -19,7 +19,15 @@ export function lerp(previous: number, current: number, amount: number): number 
  * recorded time(with microsecond)
  */
 export type Time = bigint;
+
+/**
+ * one-dimension vector
+ */
 export type Vector = number;
+
+/**
+ * one-dimension vector and recorded time
+ */
 export type VectorHasTime = [Time, Vector];
 
 export function estimateVectors(previous: VectorHasTime, current: VectorHasTime, time: Time): Vector {
