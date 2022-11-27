@@ -16,11 +16,6 @@ export function lerp(previous: number, current: number, amount: number): number 
 }
 
 /**
- * recorded time(with microsecond)
- */
-export type Time = bigint;
-
-/**
  * one-dimension vector
  */
 export type Vector = number;
