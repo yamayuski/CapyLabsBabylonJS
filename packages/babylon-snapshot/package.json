@@ -22,8 +22,8 @@
   "scripts": {
     "dev": "vite serve debug",
     "build": "vite build && tsc -p tsconfig.build.json",
-    "lint": "eslint src tests",
-    "lint:fix": "eslint --fix src tests",
+    "lint": "eslint src",
+    "lint:fix": "eslint --fix src",
     "test": "vitest"
   },
   "devDependencies": {
