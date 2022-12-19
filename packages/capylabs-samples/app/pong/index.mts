@@ -8,8 +8,7 @@ import {
     ArcRotateCamera,
     Color3,
     Color4,
-    DeepImmutable,
-    DirectionalLight,
+    CubeTexture,
     Engine,
     HemisphericLight,
     Mesh,
@@ -17,27 +16,29 @@ import {
     Quaternion,
     Scene,
     StandardMaterial,
-    TmpVectors,
+    Texture,
     Vector3,
     VirtualJoystick,
 } from "@babylonjs/core";
+import { AdvancedDynamicTexture, Control, TextBlock } from "@babylonjs/gui";
+import { GridMaterial } from "@babylonjs/materials";
 
 import "pepjs";
 import main from "../lib.mjs";
 
-/**
- * @link https://github.com/BabylonJS/Babylon.js/pull/13281
- */
-function reflectVector3(inDirection: DeepImmutable<Vector3>, normal: DeepImmutable<Vector3>, ref: Vector3): Vector3 {
-    const tmp = TmpVectors.Vector3[0];
-    tmp.copyFrom(normal).scaleInPlace(2 * Vector3.Dot(inDirection, normal));
-    return ref.copyFrom(inDirection).subtractInPlace(tmp);
-}
-
 class Stage {
-    public constructor(private readonly scene: Scene) {
-        const groundMat = new StandardMaterial("stageGroundMat", scene);
-        groundMat.diffuseColor = new Color3(0.2, 0.2, 0.2);
+    public constructor(scene: Scene) {
+        const skyboxMat = new StandardMaterial("skyboxMat", scene);
+        skyboxMat.reflectionTexture = new CubeTexture("https://www.babylonjs-playground.com/textures/TropicalSunnyDay", scene);
+        skyboxMat.reflectionTexture.coordinatesMode = Texture.SKYBOX_MODE;
+        skyboxMat.disableLighting = true;
+        skyboxMat.backFaceCulling = false;
+
+        const skyboxMesh = MeshBuilder.CreateBox("skybox", { size: 1000 }, scene);
+        skyboxMesh.infiniteDistance = true;
+        skyboxMesh.material = skyboxMat;
+
+        const groundMat = new GridMaterial("groundMat", scene);
 
         // Ground
         const ground = MeshBuilder.CreateGround("stageGround", {
@@ -76,9 +77,57 @@ class Stage {
     }
 }
 
+class ScoreBoard {
+    private readonly score1P: TextBlock;
+    private readonly score2P: TextBlock;
+    private score1PRaw = 0;
+    private score2PRaw = 0;
+
+    public constructor(scene: Scene) {
+        const tex = AdvancedDynamicTexture.CreateFullscreenUI("gui", true, scene);
+        this.score1P = new TextBlock("1p score", "0");
+        this.score1P.textVerticalAlignment = Control.VERTICAL_ALIGNMENT_TOP;
+        this.score1P.textHorizontalAlignment = Control.HORIZONTAL_ALIGNMENT_LEFT;
+        this.score1P.left = "300px";
+        this.score1P.top = "10px";
+        this.score1P.color = "#FFFFFF";
+        this.score1P.outlineColor = "#000000";
+        this.score1P.fontSize = "32px";
+        tex.addControl(this.score1P);
+
+        this.score2P = new TextBlock("2p score", "0");
+        this.score2P.textVerticalAlignment = Control.VERTICAL_ALIGNMENT_TOP;
+        this.score2P.textHorizontalAlignment = Control.HORIZONTAL_ALIGNMENT_RIGHT;
+        this.score2P.left = "-300px";
+        this.score2P.top = "10px";
+        this.score2P.color = "#FFFFFF";
+        this.score2P.outlineColor = "#000000";
+        this.score2P.fontSize = "32px";
+        tex.addControl(this.score2P);
+
+        const scoreBar = new TextBlock("bar", "-");
+        scoreBar.textVerticalAlignment = Control.VERTICAL_ALIGNMENT_TOP;
+        scoreBar.top = "10px";
+        scoreBar.color = "#FFFFFF";
+        scoreBar.outlineColor = "#000000";
+        scoreBar.fontSize = "32px";
+        tex.addControl(scoreBar);
+    }
+
+    public incrementScore1P() {
+        this.score1PRaw++;
+        this.score1P.text = `${this.score1PRaw}`;
+    }
+
+    public incrementScore2P() {
+        this.score2PRaw++;
+        this.score2P.text = `${this.score2PRaw}`;
+    }
+}
+
 class Player {
     private readonly SPEED = 0.0025;
-    private readonly joystick = new VirtualJoystick(false, { limitToContainer: false });
+    private readonly joystick = new VirtualJoystick(false, { limitToContainer: true });
     public constructor(private readonly mesh: Mesh) {
     }
 
@@ -104,12 +153,13 @@ class Enemy {
     }
 }
 
-class Ball {
+class Ball extends EventTarget {
     private readonly SPEED = 0.0025;
 
-    private direction: Vector3;
+    private velocity: Vector3;
     public constructor(private readonly mesh: Mesh) {
-        this.direction = new Vector3(
+        super();
+        this.velocity = new Vector3(
             Math.random() * 2 * Math.PI - Math.PI,
             0,
             Math.random() * 2 * Math.PI - Math.PI,
@@ -119,26 +169,34 @@ class Ball {
     public update(deltaTime: number): void {
         // move
         this.mesh.position.addInPlace(new Vector3(
-            deltaTime * this.direction.x * this.SPEED,
+            deltaTime * this.velocity.x * this.SPEED,
             0,
-            deltaTime * this.direction.z * this.SPEED,
+            deltaTime * this.velocity.z * this.SPEED,
         ));
 
         // Hit with bar
 
         // goal
         if (this.mesh.position.z > 3.9) {
-            this.direction = reflectVector3(this.direction, new Vector3(0, 0, -1), new Vector3());
+            this.dispatchEvent(new GoalEvent(true));
+            this.velocity = Vector3.Reflect(this.velocity, new Vector3(0, 0, -1));
         } else if (this.mesh.position.z < -3.9) {
-            this.direction = reflectVector3(this.direction, new Vector3(0, 0, 1), new Vector3());
+            this.dispatchEvent(new GoalEvent(false));
+            this.velocity = Vector3.Reflect(this.velocity, new Vector3(0, 0, 1));
         }
 
         // reflect upper/lower
         if (this.mesh.position.x > 2.4) {
-            this.direction = reflectVector3(this.direction, new Vector3(-1, 0, 0), new Vector3());
+            this.velocity = Vector3.Reflect(this.velocity, new Vector3(-1, 0, 0));
         } else if (this.mesh.position.x < -2.4) {
-            this.direction = reflectVector3(this.direction, new Vector3(1, 0, 0), new Vector3());
+            this.velocity = Vector3.Reflect(this.velocity, new Vector3(1, 0, 0));
         }
+    }
+}
+
+class GoalEvent extends Event {
+    public constructor(public readonly is1P: boolean) {
+        super("GoalEvent");
     }
 }
 
@@ -171,6 +229,18 @@ async function createScene(engine: Engine): Promise<Scene> {
     }, scene);
     ballMesh.scaling = new Vector3(0.2, 0.2, 0.2);
     const ball = new Ball(ballMesh);
+
+    const board = new ScoreBoard(scene);
+
+    ball.addEventListener("GoalEvent", (evt) => {
+        if (evt instanceof GoalEvent) {
+            if (evt.is1P) {
+                board.incrementScore1P();
+            } else {
+                board.incrementScore2P();
+            }
+        }
+    });
 
     scene.registerBeforeRender(() => {
         const deltaTime = engine.getDeltaTime();
