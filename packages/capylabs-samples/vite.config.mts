@@ -13,6 +13,7 @@ export default defineConfig({
                 "many-trees": resolve(__dirname, "app", "many-trees", "index.html"),
                 "tic-tac-toe": resolve(__dirname, "app", "tic-tac-toe", "index.html"),
                 "pong": resolve(__dirname, "app", "pong", "index.html"),
+                "skybox-simulator": resolve(__dirname, "app", "skybox-simulator", "index.html"),
             },
         },
     },
