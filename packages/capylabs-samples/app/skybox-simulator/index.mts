@@ -19,9 +19,10 @@ import {
     Texture,
     Vector3,
 } from "@babylonjs/core";
-import { AdvancedDynamicTexture, Button, Control } from "@babylonjs/gui";
+import { AdvancedDynamicTexture, Button, Control, Slider, StackPanel, TextBlock } from "@babylonjs/gui";
 
 import "@babylonjs/loaders/glTF/2.0";
+import { SkyMaterial } from "@babylonjs/materials";
 import "pepjs";
 
 import main from "../lib.mjs";
@@ -101,6 +102,8 @@ async function createScene(engine: Engine): Promise<Scene> {
         gui.addControl(btn);
     });
 
+    prepareSkyMaterial(scene, gui);
+
     return scene;
 }
 
@@ -119,6 +122,102 @@ function createSkyboxMaterial(scene: Scene, pyJpg: string): StandardMaterial {
     mat.disableLighting = true;
     mat.backFaceCulling = false;
     return mat;
+}
+
+function prepareSkyMaterial(scene: Scene, gui: AdvancedDynamicTexture): void {
+    const mat = new SkyMaterial("sky_mat", scene);
+    mat.backFaceCulling = false;
+
+    const panel = new StackPanel("sky_mat_panel");
+    panel.width = 0.2;
+    panel.verticalAlignment = Control.VERTICAL_ALIGNMENT_TOP;
+    panel.horizontalAlignment = Control.HORIZONTAL_ALIGNMENT_LEFT;
+    gui.addControl(panel);
+
+    const button = Button.CreateSimpleButton("enable_sky", "ENABLE SkyMaterial");
+    button.height = "40px";
+    button.color = "white";
+    button.background = "black";
+    button.verticalAlignment = Control.VERTICAL_ALIGNMENT_TOP;
+    button.horizontalAlignment = Control.HORIZONTAL_ALIGNMENT_LEFT;
+    button.onPointerClickObservable.add(() => {
+        const skyboxMesh = scene.getMeshByName("skybox")!;
+        skyboxMesh.material = mat;
+    });
+    panel.addControl(button);
+
+    const controls = [
+        {
+            property: "azimuth",
+            minimum: 0.0,
+            maximum: 1.0,
+            step: 0.01,
+            default: 0.25,
+        },
+        {
+            property: "inclination",
+            minimum: -0.5,
+            maximum: 0.5,
+            step: 0.05,
+            default: 0.49,
+        },
+        {
+            property: "luminance",
+            minimum: 0.001,
+            maximum: 0.999,
+            step: 0.05,
+            default: 1.0,
+        },
+        {
+            property: "mieCoefficient",
+            minimum: 0.001,
+            maximum: 0.1,
+            step: 0.001,
+            default: 0.005,
+        },
+        {
+            property: "mieDirectionalG",
+            minimum: 0.0,
+            maximum: 1.0,
+            step: 0.05,
+            default: 0.8,
+        },
+        {
+            property: "rayleigh",
+            minimum: 0.0,
+            maximum: 10.0,
+            step: 0.1,
+            default: 2.0,
+        },
+        {
+            property: "turbidity",
+            minimum: 0.0,
+            maximum: 100.0,
+            step: 1,
+            default: 10.0,
+        },
+    ];
+
+    for (const index in controls) {
+        const control = controls[index];
+        const header = new TextBlock();
+        header.text = `${control.property}:${control.default}`;
+        header.height = "30px";
+        header.color = "white";
+        panel.addControl(header);
+
+        const slider = new Slider();
+        slider.height = "20px";
+        slider.minimum = control.minimum;
+        slider.maximum = control.maximum;
+        slider.value = control.default;
+        slider.step = control.step;
+        slider.onValueChangedObservable.add((value) => {
+            header.text = `${control.property}:${value}`;
+            (mat as any)[control.property] = value;
+        });
+        panel.addControl(slider);
+    }
 }
 
 main(createScene);
