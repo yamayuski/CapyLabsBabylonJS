@@ -5,7 +5,7 @@ export default defineConfig({
     plugins: [
         splitVendorChunkPlugin(),
     ],
-    base: "/CapyLabsBabylonJS/samples/",
+    // base: "/CapyLabsBabylonJS/samples/",
     build: {
         rollupOptions: {
             input: {
@@ -14,6 +14,7 @@ export default defineConfig({
                 "tic-tac-toe": resolve(__dirname, "app", "tic-tac-toe", "index.html"),
                 "pong": resolve(__dirname, "app", "pong", "index.html"),
                 "skybox-simulator": resolve(__dirname, "app", "skybox-simulator", "index.html"),
+                "mine-crafting": resolve(__dirname, "app", "mine-crafting", "index.html"),
             },
         },
     },

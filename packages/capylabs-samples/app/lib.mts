@@ -15,7 +15,9 @@ export default async function main(createScene: (engine: Engine, canvas: HTMLCan
         throw new Error("canvas#app not found");
     }
     const engine = new Engine($canvas);
+    engine.displayLoadingUI();
     const scene = await createScene(engine, $canvas);
+    engine.hideLoadingUI();
 
     engine.runRenderLoop(() => {
         scene.render();
